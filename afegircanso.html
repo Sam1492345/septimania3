@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afegir Cançó - Septimania Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles1.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        label, input, textarea {
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+
+        footer button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video de fondo -->
+    <video autoplay muted loop id="bg-video">
+        <source src="wavevideo.mp4" type="video/mp4">
+        Tu navegador no soporta la reproducción de videos.
+    </video>
+
+    <div class="container">
+        <header>
+            <h1>Afegir Cançó</h1>
+        </header>
+
+        <main>
+            <form id="songForm" enctype="multipart/form-data" method="post" action="submit_song.php">
+                <label for="title">Títol de la cançó:</label>
+                <input type="text" id="title" name="title" required>
+
+                <label for="artist">Artista:</label>
+                <input type="text" id="artist" name="artist" required>
+
+                <label for="musicFile">Fitxer de música (mp3):</label>
+                <input type="file" id="musicFile" name="musicFile" accept=".mp3" required>
+
+                <label for="coverFile">Fitxer de caràtula (jpg/png):</label>
+                <input type="file" id="coverFile" name="coverFile" accept=".jpg, .png" required>
+
+                <label for="gameFile">Fitxer del joc (TXT) o dades del joc:</label>
+                <input type="file" id="gameFile" name="gameFile" accept=".txt">
+                
+                <label for="gameData">O crear dades del joc:</label>
+                <textarea id="gameData" name="gameData" rows="6" placeholder="Instant inicial, Instant final, ..."></textarea>
+
+                <input type="submit" value="Afegir Cançó">
+            </form>
+        </main>
+    </div>
+
+    <footer>
+        <button onclick="window.location.href='home1.html'">Home</button>
+    </footer>
+
+    <script>
+        document.getElementById('songForm').addEventListener('submit', function(event) {
+            const gameFile = document.getElementById('gameFile').files.length;
+            const gameData = document.getElementById('gameData').value.trim();
+
+            // Si ambas partes (fitxer y textarea) están rellenas, mostrar error.
+            if (gameFile > 0 && gameData !== "") {
+                alert("Error: No pots pujar un fitxer de joc i emplenar les dades del joc al mateix temps.");
+                event.preventDefault();
+            }
+
+            // Validación básica para asegurarse de que se sube un archivo TXT válido
+            if (gameFile > 0) {
+                const file = document.getElementById('gameFile').files[0];
+                if (file.type !== "text/plain") {
+                    alert("Error: El fitxer de joc ha de ser un arxiu TXT.");
+                    event.preventDefault();
+                }
+            }
+
+            // Si solo hay datos en el textarea, hacer validaciones adicionales (ejemplo simple).
+            if (gameData !== "") {
+                const lines = gameData.split('\n');
+                for (let line of lines) {
+                    const parts = line.split(',');
+                    if (parts.length !== 2 || isNaN(parts[0]) || isNaN(parts[1]) || parseFloat(parts[0]) >= parseFloat(parts[1])) {
+                        alert("Error: Les dades del joc no són vàlides. Revisa els instants.");
+                        event.preventDefault();
+                        break;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

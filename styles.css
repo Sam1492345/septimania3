@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+}
+
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1; /* Envía el video detrás del contenido */
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Cambia de fila a columna */
+    height: 100vh; /* La altura total de la ventana */
+    z-index: 1;
+    position: relative;
+}
+
+header {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 4rem;
+    color: #f5a623;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(45deg, #f5a623, #f79d00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido del aside */
+    align-items: center; /* Centra horizontalmente el contenido del aside */
+    flex: 1; /* Esto permitirá que el aside ocupe el espacio restante */
+    margin-top: 20px; /* Espacio superior para evitar que los botones estén demasiado cerca del título */
+}
+
+.menu-btn {
+    background-color: #74c0fc; /* Azul pastel */
+    border: none;
+    padding: 15px;
+    margin: 10px 0;
+    width: 200px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    color: white;
+    border-radius: 8px; /* Bordes redondeados para mejor apariencia */
+}
+
+.menu-btn:nth-child(2) {
+    background-color: #faa2c1; /* Rosa suave */
+}
+
+.menu-btn:nth-child(3) {
+    background-color: #d0bfff; /* Lavanda */
+}
+
+.menu-btn:hover {
+    background-color: #ffd43b; /* Amarillo user-friendly al pasar el ratón */
+    transform: scale(1.05);
+    color: black; /* Texto negro para contraste con el fondo amarillo */
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.robot-img {
+    max-width: 400px;
+    height: auto;
+}
